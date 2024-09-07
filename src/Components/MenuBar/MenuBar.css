@@ -1,0 +1,23 @@
+.menuBar {
+    display: flex;
+    justify-content: space-around;
+    background-color: lightgrey;
+    padding: 10px;
+  }
+  
+  .menuItem {
+    color: black;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .menuItem:hover {
+    color: grey; 
+  }
+
+  .menuLogoItem {
+    display: flex;
+    align-items: center;
+    mix-blend-mode: multiply;
+  }

@@ -7,6 +7,7 @@ import {
   get5DaysWeatherInLocation,
   searchCitiesByTerm,
 } from './Services/apiRequests';
+import { Action } from './Types/generics';
 
 const menuItems = [
   { title: 'Home', onClick: () => console.log('Go to Home') },
@@ -28,6 +29,17 @@ function App() {
     get5DaysWeatherInLocation(location).then(setForecasts);
   };
 
+  const sta = [];
+
+  const act: Action = {
+    getTitle: () => (sta.length === 0 ? 'Add To Favorite' : 'remove'),
+    onAction: (data) => {
+      sta.push(data);
+      console.log(data);
+      console.log({ sta });
+    },
+  };
+
   return (
     <div className="App">
       <MenuBar menuItems={menuItems} menuLogoItem={menuLogoItem} />
@@ -35,7 +47,7 @@ function App() {
         onSelect={onLocationSelect}
         getSearchOptions={searchCitiesByTerm}
       />
-      <WeatherCardRow dailyForecasts={forecasts} />
+      <WeatherCardRow dailyForecasts={forecasts} actions={[act]} />
     </div>
   );
 }

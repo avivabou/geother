@@ -1,5 +1,5 @@
 type DayForecast = {
-  date: string;
+  title: string;
   weatherStatus: string;
   iconCode: number;
   temperature: string;

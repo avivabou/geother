@@ -6,7 +6,7 @@ import {
 } from '../constants';
 import { MapItem } from '../Types/generics';
 import { DayForecast } from '../Types/weatherInfo';
-import { fahrenheitToCelsius } from './utils';
+import { fahrenheitToCelsius, getDayNameByDate } from './utils';
 
 const buildGetLocationsUrl = (searchTerm: string) =>
   `${ACCWEATHER_GET_LOCATIONS_API}
@@ -58,7 +58,7 @@ async function get5DaysWeatherInLocation(location: string) {
       iconCode: forcast.Day.Icon,
       weatherStatus: forcast.Day.IconPhrase,
       temperature: fahrenheitToCelsius(forcast.Temperature.Maximum.Value),
-      date: forcast.Date,
+      title: getDayNameByDate(forcast.Date),
     })) as DayForecast[];
   } catch (error) {
     console.error('There has been a problem with your fetch operation:', error);

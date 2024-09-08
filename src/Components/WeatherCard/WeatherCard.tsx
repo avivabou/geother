@@ -1,16 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './WeatherCard.css';
 import { GetDayIconUrl } from '../../Services/apiRequests';
+import { Action } from '../../Types/generics';
 
 type WeatherCardProps = {
   title: string;
   weatherStatus: string;
   iconCode: number;
   temperature?: string;
-  functions?: {
-    actionName: string;
-    onAction: (key: string) => void;
-  }[];
+  actions?: Action[];
 };
 
 function WeatherCard({
@@ -18,8 +16,18 @@ function WeatherCard({
   weatherStatus,
   iconCode,
   temperature,
-  functions,
+  actions,
 }: WeatherCardProps) {
+  const getActionTitles = () =>
+    actions?.map(({ getTitle }) => getTitle()) ?? [];
+
+  const [actionTitles, setActionTitles] = useState<string[]>(getActionTitles());
+
+  const onAction = (action: Action) => {
+    action.onAction();
+    setActionTitles(getActionTitles());
+  };
+
   return (
     <div className="weather-card">
       <h2 className="weather-title">{title}</h2>
@@ -31,14 +39,14 @@ function WeatherCard({
       />
       <div className="weather-actions">
         {temperature && <p className="weather-temperature">{temperature}</p>}
-        {functions?.map((func, index) => (
+        {actions?.map((action, index) => (
           <button
             key={index}
             className="weather-action-button"
-            onClick={() => func.onAction(func.actionName)}
+            onClick={() => onAction(action)}
             type="button"
           >
-            {func.actionName}
+            {actionTitles[index]}
           </button>
         ))}
       </div>

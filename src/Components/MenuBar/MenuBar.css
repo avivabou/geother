@@ -11,6 +11,7 @@
     cursor: pointer;
     padding: 10px;
     font-size: 16px;
+    text-decoration: none;
   }
   
   .menuItem:hover {
@@ -21,4 +22,10 @@
     display: flex;
     align-items: center;
     mix-blend-mode: multiply;
+  }
+
+  .menubar-items-comntainer {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
   }

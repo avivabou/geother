@@ -1,17 +1,10 @@
-import { useState } from 'react';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import MenuBar from './Components/MenuBar/MenuBar';
-import SearchBar from './Components/SearchBar/SearchBar';
-import WeatherCardRow from './Components/WeatherCardsRow/WeatherCardsRow';
-import {
-  get5DaysWeatherInLocation,
-  searchCitiesByTerm,
-} from './Services/apiRequests';
-import { Action } from './Types/generics';
+import HomePage from './Pages/HomePage/HomePage';
 
 const menuItems = [
-  { title: 'Home', onClick: () => console.log('Go to Home') },
-  { title: 'Favorites', onClick: () => console.log('Go to About') },
+  { title: 'Home', path: '/' },
+  { title: 'Favorites', path: '/favorites' },
 ];
 
 const menuLogoItem = {
@@ -22,33 +15,17 @@ const menuLogoItem = {
 };
 
 function App() {
-  const [forecasts, setForecasts] = useState<any>([]);
-
-  const onLocationSelect = async (location: string) => {
-    console.log({ location });
-    get5DaysWeatherInLocation(location).then(setForecasts);
-  };
-
-  const sta = [];
-
-  const act: Action = {
-    getTitle: () => (sta.length === 0 ? 'Add To Favorite' : 'remove'),
-    onAction: (data) => {
-      sta.push(data);
-      console.log(data);
-      console.log({ sta });
-    },
-  };
-
   return (
-    <div className="App">
-      <MenuBar menuItems={menuItems} menuLogoItem={menuLogoItem} />
-      <SearchBar
-        onSelect={onLocationSelect}
-        getSearchOptions={searchCitiesByTerm}
-      />
-      <WeatherCardRow dailyForecasts={forecasts} actions={[act]} />
-    </div>
+    <Router>
+      <div className="App">
+        <MenuBar menuItems={menuItems} menuLogoItem={menuLogoItem} />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/favorites" element={<HomePage />} />
+          {/* Add more routes as needed */}
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

@@ -1,6 +1,6 @@
 export type MenuItem = {
   title: string;
-  onClick: () => void;
+  path: string;
 };
 
 export type MenuLogoItem = {

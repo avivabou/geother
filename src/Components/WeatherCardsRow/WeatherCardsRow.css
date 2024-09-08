@@ -3,6 +3,7 @@
     justify-content: space-between; 
     gap: auto;
     margin-top: 20px;
+    position: relative;
   }
   
   .weather-card {

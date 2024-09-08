@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { MenuItem, MenuLogoItem } from '../../Types/siteActions';
 import './MenuBar.css';
 
@@ -22,11 +23,15 @@ function MenuBar({ menuItems, menuLogoItem }: MenuBarProps) {
           />
         </div>
       )}
-      {menuItems.map((item, index) => (
-        <div key={index} className="menuItem" onClick={item.onClick}>
-          {item.title}
-        </div>
-      ))}
+      <nav className="menubar-items-comntainer">
+        {menuItems.map((item, index) => (
+          <Link to={item.path} className="menuItem">
+            <div key={index}>
+              {item.title}
+            </div>
+          </Link>
+        ))}
+      </nav>
     </div>
   );
 }

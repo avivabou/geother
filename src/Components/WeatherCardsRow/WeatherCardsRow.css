@@ -1,0 +1,13 @@
+.weather-card-row {
+    display: flex;
+    justify-content: space-between; 
+    gap: auto;
+    margin-top: 20px;
+  }
+  
+  .weather-card {
+    flex: 1;
+    margin: 0 10px;
+    min-width: 150px;
+  }
+  

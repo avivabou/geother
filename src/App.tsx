@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import './App.css';
 import MenuBar from './Components/MenuBar/MenuBar';
 import SearchBar from './Components/SearchBar/SearchBar';
+import WeatherCardRow from './Components/WeatherCardsRow/WeatherCardsRow';
 import {
   get5DaysWeatherInLocation,
   searchCitiesByTerm,
@@ -18,12 +20,14 @@ const menuLogoItem = {
   onClick: () => console.log('Go to LOGO'),
 };
 
-const onLocationSelect = async (location: string) => {
-  console.log({ location });
-  get5DaysWeatherInLocation(location).then(console.log);
-};
-
 function App() {
+  const [forecasts, setForecasts] = useState<any>([]);
+
+  const onLocationSelect = async (location: string) => {
+    console.log({ location });
+    get5DaysWeatherInLocation(location).then(setForecasts);
+  };
+
   return (
     <div className="App">
       <MenuBar menuItems={menuItems} menuLogoItem={menuLogoItem} />
@@ -31,6 +35,7 @@ function App() {
         onSelect={onLocationSelect}
         getSearchOptions={searchCitiesByTerm}
       />
+      <WeatherCardRow dailyForecasts={forecasts} />
     </div>
   );
 }

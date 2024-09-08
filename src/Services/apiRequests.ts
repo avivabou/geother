@@ -24,11 +24,10 @@ async function searchCitiesByTerm(searchTerm: string) {
   try {
     const response = await fetch(requestUrl);
     if (!response.ok) {
-      console.error('Network response was not ok');
+      throw new Error('Network response was not ok');
     }
 
     const data = await response.json();
-    console.log(data);
     return Array.from(
       new Set(
         data.map(
@@ -40,8 +39,7 @@ async function searchCitiesByTerm(searchTerm: string) {
       )
     ) as MapItem[];
   } catch (error) {
-    console.error('There has been a problem with your fetch operation:', error);
-    return [];
+    throw new Error(`Searching of term: '${searchTerm}' has failed`);
   }
 }
 
@@ -50,7 +48,7 @@ async function get5DaysWeatherInLocation(location: string) {
   try {
     const response = await fetch(requestUrl);
     if (!response.ok) {
-      console.error('Network response was not ok');
+      throw new Error('Network response was not ok');
     }
 
     const data = await response.json();
@@ -59,10 +57,10 @@ async function get5DaysWeatherInLocation(location: string) {
       weatherStatus: forcast.Day.IconPhrase,
       temperature: fahrenheitToCelsius(forcast.Temperature.Maximum.Value),
       title: getDayNameByDate(forcast.Date),
+      key: location,
     })) as DayForecast[];
   } catch (error) {
-    console.error('There has been a problem with your fetch operation:', error);
-    return [];
+    throw new Error(`Could not fetch forecasts for next 5 days of ${location}`);
   }
 }
 

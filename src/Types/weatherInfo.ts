@@ -3,6 +3,7 @@ type DayForecast = {
   weatherStatus: string;
   iconCode: number;
   temperature: string;
+  key: string;
 };
 
 // eslint-disable-next-line import/prefer-default-export

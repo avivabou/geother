@@ -10,6 +10,7 @@ import { Action, MapItem } from '../../Types/generics';
 import PageSection from '../../Components/PageSection/PageSection';
 import WeatherCard from '../../Components/WeatherCard/WeatherCard';
 import { DayForecast } from '../../Types/weatherInfo';
+import { mapItemToString } from '../../Services/utils';
 
 const SECTION_BACKGROUND_URL =
   // eslint-disable-next-line max-len
@@ -50,16 +51,15 @@ function HomePage() {
 
     const addToFavoritesAction: Action = {
       getTitle: () =>
-        favorites.includes(selectedLocation.key)
+        favorites.includes(mapItemToString(selectedLocation))
           ? 'Remove From Favorites'
           : 'Add To Favorites',
       onAction: () => {
-        if (favorites.includes(selectedLocation.key)) {
-          updateFavorites(
-            favorites.filter((key) => key !== selectedLocation.key)
-          );
+        const locationString = mapItemToString(selectedLocation);
+        if (favorites.includes(locationString)) {
+          updateFavorites(favorites.filter((key) => key !== locationString));
         } else {
-          updateFavorites(favorites.concat([selectedLocation.key]));
+          updateFavorites(favorites.concat([locationString]));
         }
       },
     };
@@ -68,8 +68,8 @@ function HomePage() {
       <WeatherCard
         key="section-content"
         title={selectedLocation.value}
-        iconCode={today.iconCode}
-        weatherStatus={today.weatherStatus}
+        iconCode={today?.iconCode}
+        weatherStatus={today?.weatherStatus}
         actions={[addToFavoritesAction]}
       />
     ) : null;

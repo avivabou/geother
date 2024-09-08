@@ -13,7 +13,7 @@ function WeatherCardRow({ dailyForecasts, actions }: WeatherCardRowProps) {
   const getActionsWithBoundData = (data: DayForecast) =>
     actions?.map((action) => ({
       getTitle: action.getTitle,
-      onAction: () => action.onAction(data),
+      onAction: () => action.onAction(data.key),
     }));
 
   return (

@@ -25,8 +25,8 @@ function MenuBar({ menuItems, menuLogoItem }: MenuBarProps) {
       )}
       <nav className="menubar-items-comntainer">
         {menuItems.map((item, index) => (
-          <Link to={item.path} className="menuItem">
-            <div key={index}>{item.title}</div>
+          <Link to={item.path} className="menuItem" key={index}>
+            <div> {item.title}</div>
           </Link>
         ))}
       </nav>

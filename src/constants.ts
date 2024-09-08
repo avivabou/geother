@@ -1,4 +1,4 @@
-const ACCWEATHER_API_KEY = 'OA1ebPRZTF6kMn4xM5xu3niqHbnLK8AL';
+const ACCWEATHER_API_KEY = 'cwYYTY3HyKZoyuAVkRXR8ZGr8R6qV0hA';
 const ACCWEATHER_GET_LOCATIONS_API =
   'https://dataservice.accuweather.com/locations/v1/cities/autocomplete';
 const ACCWEATHER_GET_5DAYS_WEATHER_API =

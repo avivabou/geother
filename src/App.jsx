@@ -1,5 +1,7 @@
 import './App.css';
 import MenuBar from './Components/MenuBar/MenuBar';
+import SearchBar from './Components/SearchBar/SearchBar';
+import { searchCitiesByTerm } from './Services/apiRequests';
 
 const menuItems = [
   { title: 'Home', onClick: () => console.log('Go to Home') },
@@ -17,6 +19,7 @@ function App() {
   return (
     <div className="App">
       <MenuBar menuItems={menuItems} menuLogoItem={menuLogoItem} />
+      <SearchBar onSelect={console.log} getSearchOptions={searchCitiesByTerm} />
     </div>
   );
 }

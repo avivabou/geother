@@ -1,0 +1,12 @@
+.menuBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+
+.App {
+    position: relative;
+    padding-top: 80px;
+  }

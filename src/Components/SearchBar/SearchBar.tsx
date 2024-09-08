@@ -4,7 +4,7 @@ import './SearchBar.css';
 import { MapItem } from '../../Types/generics';
 
 type SearchBarProps = {
-  onSelect: (selected: string) => void;
+  onSelect: (selected: MapItem) => void;
   getSearchOptions?: (searchTerm: string) => Promise<MapItem[]>;
 };
 
@@ -39,7 +39,7 @@ function SearchBar({ onSelect, getSearchOptions }: SearchBarProps) {
   return (
     <AutoComplete
       options={options.map(convertToDropdownItem)}
-      onSelect={(_, { key }) => onSelect(key)}
+      onSelect={(_, value) => onSelect(value)}
       onSearch={handleSearch}
       className="searchbar-box"
     >

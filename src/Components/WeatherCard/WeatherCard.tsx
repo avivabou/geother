@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './WeatherCard.css';
 import { GetDayIconUrl } from '../../Services/apiRequests';
 import { Action } from '../../Types/generics';
@@ -18,14 +18,11 @@ function WeatherCard({
   temperature,
   actions,
 }: WeatherCardProps) {
-  const getActionTitles = () =>
-    actions?.map(({ getTitle }) => getTitle()) ?? [];
-
-  const [actionTitles, setActionTitles] = useState<string[]>(getActionTitles());
+  const [_, activeUpdate] = useState<boolean>(false);
 
   const onAction = (action: Action) => {
     action.onAction();
-    setActionTitles(getActionTitles());
+    activeUpdate((prev) => !prev);
   };
 
   return (
@@ -46,7 +43,7 @@ function WeatherCard({
             onClick={() => onAction(action)}
             type="button"
           >
-            {actionTitles[index]}
+            {action.getTitle()}
           </button>
         ))}
       </div>

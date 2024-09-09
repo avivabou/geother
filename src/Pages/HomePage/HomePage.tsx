@@ -1,9 +1,11 @@
 import './HomePage.css';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import WeatherCardRow from '../../Components/WeatherCardsRow/WeatherCardsRow';
 import {
   get5DaysWeatherInLocation,
+  getCityInfo,
   searchCitiesByTerm,
 } from '../../Services/apiRequests';
 import { Action, MapItem } from '../../Types/generics';
@@ -22,10 +24,28 @@ type SelectedLocationForecasts = {
 };
 
 function HomePage() {
+  const [searchParams] = useSearchParams();
+  const [defaultLocation, setDefaultLocation] = useState<MapItem>();
   const [favorites, setFavorites] = useState<string[]>([]);
   const [selectedForecasts, setForecasts] = useState<SelectedLocationForecasts>(
     {} as SelectedLocationForecasts
   );
+
+  const locKey = searchParams.get('locKey');
+  const onLocationSelect = async (location: MapItem) => {
+    get5DaysWeatherInLocation(location.key).then((forecasts) =>
+      setForecasts({ selectedLocation: location, forecasts })
+    );
+  };
+
+  useEffect(() => {
+    if (locKey) {
+      getCityInfo(locKey).then((location: MapItem) => {
+        setDefaultLocation(location);
+        onLocationSelect(location);
+      });
+    }
+  }, [locKey]);
 
   useEffect(() => {
     const storedFavorites = localStorage.getItem('favorites');
@@ -37,12 +57,6 @@ function HomePage() {
   const updateFavorites = (newFavorites: string[]) => {
     setFavorites(newFavorites);
     localStorage.setItem('favorites', JSON.stringify(newFavorites));
-  };
-
-  const onLocationSelect = async (location: MapItem) => {
-    get5DaysWeatherInLocation(location.key).then((forecasts) =>
-      setForecasts({ selectedLocation: location, forecasts })
-    );
   };
 
   const getSectionContent = () => {

@@ -1,6 +1,7 @@
 import {
   ACCWEATHER_API_KEY,
   ACCWEATHER_GET_5DAYS_WEATHER_API,
+  ACCWEATHER_GET_CITY_API,
   ACCWEATHER_GET_DAY_ICON_API,
   ACCWEATHER_GET_LOCATIONS_API,
 } from '../constants';
@@ -15,6 +16,9 @@ const buildGetLocationsUrl = (searchTerm: string) =>
 const buildGet5DaysWeatherUrl = (location: string) =>
   `${ACCWEATHER_GET_5DAYS_WEATHER_API}/${location}
 ?apikey=${ACCWEATHER_API_KEY}`;
+
+const buildGetCityInfoUrl = (location: string) =>
+  `${ACCWEATHER_GET_CITY_API}/${location}?apikey=${ACCWEATHER_API_KEY}`;
 
 const GetDayIconUrl = (dayIcon: number) =>
   `${ACCWEATHER_GET_DAY_ICON_API}/${String(dayIcon).padStart(2, '0')}-s.png`;
@@ -64,4 +68,27 @@ async function get5DaysWeatherInLocation(location: string) {
   }
 }
 
-export { searchCitiesByTerm, get5DaysWeatherInLocation, GetDayIconUrl };
+async function getCityInfo(location: string) {
+  const requestUrl = buildGetCityInfoUrl(location);
+  try {
+    const response = await fetch(requestUrl);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+    return {
+      key: location,
+      value: data.LocalizedName,
+    } as MapItem;
+  } catch (error) {
+    throw new Error(`Could not fetch data of city code '${location}'`);
+  }
+}
+
+export {
+  searchCitiesByTerm,
+  get5DaysWeatherInLocation,
+  GetDayIconUrl,
+  getCityInfo,
+};

@@ -25,7 +25,6 @@ type SelectedLocationForecasts = {
 
 function HomePage() {
   const [searchParams] = useSearchParams();
-  const [defaultLocation, setDefaultLocation] = useState<MapItem>();
   const [favorites, setFavorites] = useState<string[]>([]);
   const [selectedForecasts, setForecasts] = useState<SelectedLocationForecasts>(
     {} as SelectedLocationForecasts
@@ -41,7 +40,6 @@ function HomePage() {
   useEffect(() => {
     if (locKey) {
       getCityInfo(locKey).then((location: MapItem) => {
-        setDefaultLocation(location);
         onLocationSelect(location);
       });
     }

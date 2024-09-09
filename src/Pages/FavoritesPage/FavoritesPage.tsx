@@ -1,4 +1,3 @@
-import './FavoritesPage.css';
 import { useEffect, useState } from 'react';
 import { Action } from '../../Types/generics';
 import PageSection from '../../Components/PageSection/PageSection';
